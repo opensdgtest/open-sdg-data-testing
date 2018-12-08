@@ -73,7 +73,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           finterprints:
-            - "PASTE_PRODUCTION_FINGERPRINT_HERE"
+            - "a3:a1:f1:bb:da:3f:e5:fd:34:1e:d8:39:fc:cc:70:87"
       - attach_workspace:
           at: /tmp/build
       - run:
@@ -102,9 +102,9 @@ workflows:
           filters:
             branches:
               only: develop
-      #- deploy_prod:
-      #    requires:
-      #      - build
-      #    filters:
-      #      branches:
-      #        only: master
+      - deploy_prod:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master

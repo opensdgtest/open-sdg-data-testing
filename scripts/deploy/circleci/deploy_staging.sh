@@ -14,8 +14,8 @@ GH_EMAIL="no-reply@example.com"
 ###################################
 
 # There is probably no need to modify anything below this point.
-git config --global user.email $GH_EMAIL
-git config --global user.name $GH_NAME
+git config --global user.email "$GH_EMAIL"
+git config --global user.name "$GH_NAME"
 
 # CircleCI will identify the SSH key with a "Host" of gh-stg. In order to tell
 # Git to use this key, we need to hack the SSH key:
@@ -24,14 +24,8 @@ git clone git@gh-staging:$GH_ORG_STAGING/$CIRCLE_PROJECT_REPONAME.git out
 
 cd out
 git checkout gh-pages || git checkout --orphan gh-pages
-git rm -rfq .
-cd ..
-
-# The fully built site is already available at /tmp/build.
-cp -a /tmp/build/_site/. out/.
-
-mkdir -p out/.circleci && cp -a .circleci/. out/.circleci/.
-cd out
+git rm -rfq staging
+cp -a /tmp/build/_site staging
 
 git add -A
 git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
